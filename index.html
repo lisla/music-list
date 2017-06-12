@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+    <form id="music-form">
+      <div class="row">
+        <div class="medium-8 medium-offset-2">
+          <h1>Music</h1>
+          <div class="row">
+            <div class="medium-6 column">
+              <input 
+                type="text"
+                class="artist"
+                name=artistName
+                placeholder="Artist"
+                autofocus
+                required
+              >
+            </div>
+            <div class="medium-5 column">
+              <select name="genre" class ="genre">
+                <option value="none">-None-</option>
+                <option value="rock">Rock</option>
+                <option value="pop">Pop</option>
+                <option value="hipHop">Hip-Hop</option>
+                <option value="country">Country</option>
+              </select>
+            </div>
+            <div class="medium-1 column">
+              <button 
+                class="success button"
+                type="submit"
+              >
+                <i
+                  class="fa fa-plus"
+                  aria-hidden="true">
+                </i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="medium-3 column">
+        <h3>Rock</h3>
+        <ul class="rock"></ul>
+      </div>
+      <div class="medium-3 column">
+        <h3>Pop</h3>
+        <ul class="pop"></ul>
+      </div>
+      <div class="medium-3 column">
+        <h3>Hip-Hop</h3>
+        <ul class="hip-hop"></ul>
+      </div>
+      <div class="medium-3 column">
+        <h3>Country</h3>
+        <ul class="country"></ul>
+      </div>
+    </div>
+
+    <li class="music template">
+      <div class="row">
+        <div class="small-5 column">
+          <span 
+            class="artist-name"
+          ></span>
+          <span
+            class="artist-genre"
+          ></span>
+        </div>
+        <div class="small-7 column" >
+          <span class="actions">
+            <button class="edit button">
+              <i 
+                class="fa fa-pencil"
+                aria-hidden="true"
+              ></i>
+            </button>
+            <button class="fav button warning">
+              <i 
+                class="fa fa-star"
+                aria-hidden="true"
+              ></i>
+            </button>
+            <button class="remove button alert">
+              <i 
+                class="fa fa-trash-o"
+                aria-hidden="true"
+              ></i>
+            </button>
+            <button class="up button">
+              <i
+                class="fa fa-arrow-up"
+                aria-hidden="true"
+              ></i>
+            </button>
+            <button class="down button">
+              <i
+                class="fa fa-arrow-down"
+                aria-hidden="true"
+              ></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </li>
+
+    <script src="app.js"></script>
+  </body>
+</html>
