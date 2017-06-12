@@ -27,7 +27,6 @@ h1{
 html, body{
   height: 100%;
   margin: 0;
-  background: linear-gradient(141deg, #0fb8ad 20%, skyblue 51%, #9cb5e8 75%);
 }
 
 .button{

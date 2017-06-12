@@ -53,6 +53,8 @@ class App{
   renderListItem(artist){
     const item = this.template.cloneNode(true)
     item.classList.remove('template')
+    item.dataset.id = artist.id
+    item.dataset.name = artist.name
     
     item
       .querySelector('.artist-name')
@@ -68,7 +70,7 @@ class App{
 
     item
       .querySelector('button.remove')
-      .addEventListener('click', this.removeArtist.bind(this))
+      .addEventListener('click', this.removeArtist.bind(this, artist))
 
     item
       .querySelector('button.up')
@@ -106,12 +108,21 @@ class App{
     artist.fav = !artist.fav
   }
 
-  removeArtist(ev){
-    
+  removeArtist(artist, ev){
+    const listItem = ev.target.closest('.music')
+
+    for (let i = 0; i < this.artists[artist.genre].length; i++){
+      const currentId = this.artists[artist.genre][i].id.toString()
+      if (listItem.dataset.id === currentId){
+        this.artists[artist.genre].splice(i, 1)
+        break
+      }
+    }
+
+    listItem.remove()
   }
 
   moveUp(artist, ev){
-    
   }
 
   moveDown(artist, ev){
