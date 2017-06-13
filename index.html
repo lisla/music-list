@@ -28,7 +28,6 @@
             </div>
             <div class="medium-5 column">
               <select name="genre" class ="genre">
-                <option value="none">-None-</option>
                 <option value="rock">Rock</option>
                 <option value="pop">Pop</option>
                 <option value="hipHop">Hip-Hop</option>
@@ -47,11 +46,19 @@
               </button>
             </div>
           </div>
+          <div class="row">
+            <div class="medium-5 column">
+              <select name="sort" class ="sort">
+                <option class="true" value="true">Sort</option>
+                <option class="false" value="false">Show All</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </form>
 
-    <div class="row">
+    <div class="row sorted">
       <div class="medium-3 column">
         <h3>Rock</h3>
         <ul class="rock no-bullet"></ul>
@@ -67,6 +74,13 @@
       <div class="medium-3 column">
         <h3>Country</h3>
         <ul class="country no-bullet"></ul>
+      </div>
+    </div>
+
+    <div class="row unsorted invisible">
+      <div class="medium-6 medium-offset-3 column">
+        <h3>All Artists</h3>
+        <ul class="all no-bullet"></ul>
       </div>
     </div>
 

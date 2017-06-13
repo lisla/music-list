@@ -14,17 +14,87 @@ class App{
       country: document.querySelector(selectors.countrySelector),
       hipHop: document.querySelector(selectors.hipHopSelector),
     }
+    this.allArtistsList = document.querySelector(selectors.allSelector)
+    this.sorted = true
     this.template = document
       .querySelector(selectors.templateSelector)
 
     document
       .querySelector(selectors.formSelector)   
       .addEventListener('submit', this.addMusicViaForm.bind(this)) 
+      
+    const sort = document.querySelector(selectors.sortSelector)
+    sort.addEventListener('change', this.toggleSort.bind(this, JSON.parse(sort.value)))
+
+    this.load()
+  }
+
+  load(){
+    const artistsJSON = localStorage.getItem('artists')
+    const artistsArray = JSON.parse(artistsJSON)
+
+    const sorted = JSON.parse(localStorage.getItem('sorted'))
+    
+    if(!sorted){
+      this.sorted = sorted
+
+      document
+        .querySelector('.sorted')
+        .classList.add('invisible')
+    
+      document
+        .querySelector('.unsorted')
+        .classList.remove('invisible')
+
+      document
+        .querySelector('.false')
+        .selected = true
+    }
+    
+    if (artistsArray){
+      artistsArray.rock
+        .reverse()
+        .map(this.addMusic.bind(this))
+      artistsArray.pop
+        .reverse()
+        .map(this.addMusic.bind(this))
+      artistsArray.country
+        .reverse()
+        .map(this.addMusic.bind(this))
+      artistsArray.hipHop
+        .reverse()
+        .map(this.addMusic.bind(this))
+      
+    }
+  }
+
+  save(){
+    localStorage
+      .setItem('artists', JSON.stringify(this.artists))
+    localStorage 
+      .setItem('sorted', JSON.stringify(this.sorted))
+  }
+
+  toggleSort(ev){    
+    this.sorted = !this.sorted
+
+    document
+      .querySelector('.sorted')
+      .classList.toggle('invisible')
+    
+    document
+      .querySelector('.unsorted')
+      .classList.toggle('invisible')
+    
+    this.save()
   }
 
   addMusic(artist){
     const listItem = this.renderListItem(artist)
-    this.lists[artist.genre].appendChild(listItem)
+    const listItemCopy = this.renderListItem(artist)
+
+    this.lists[artist.genre].insertBefore(listItem, this.lists[artist.genre].firstChild)
+    this.allArtistsList.insertBefore(listItemCopy, this.allArtistsList.firstChild)
     this.max++
 
     if(artist.id > this.max){
@@ -32,6 +102,7 @@ class App{
     }
 
     this.artists[artist.genre].unshift(artist)
+    this.save()
   }
 
   addMusicViaForm(ev){
@@ -42,12 +113,15 @@ class App{
     const artist = {
       name: form.artistName.value,
       genre: form.genre.value,
-      id: this.max + 1
+      id: this.max + 1,
+      fav: false,
     }
 
     this.max++
     
     this.addMusic(artist)
+
+    form.reset()
   }
   
   renderListItem(artist){
@@ -55,6 +129,10 @@ class App{
     item.classList.remove('template')
     item.dataset.id = artist.id
     item.dataset.name = artist.name
+
+    if (artist.fav){
+      item.classList.add('fav')
+    }
     
     item
       .querySelector('.artist-name')
@@ -106,6 +184,7 @@ class App{
 
     element.classList.toggle('fav')
     artist.fav = !artist.fav
+    this.save()
   }
 
   removeArtist(artist, ev){
@@ -120,13 +199,47 @@ class App{
     }
 
     listItem.remove()
+    this.save()
   }
 
   moveUp(artist, ev){
+    const listItem = ev.target.closest('.music')
+
+    const index = this.artists[artist.genre].findIndex((currentArtist, i) => {
+      return currentArtist.id === artist.id
+    })
+
+    const genreArtists = this.artists[artist.genre]
+
+    if (index > 0) {
+      this.lists[artist.genre].insertBefore(listItem, listItem.previousElementSibling)
+
+      const previousArtist = genreArtists[index - 1]
+      genreArtists[index - 1] = artist
+      genreArtists[index] = previousArtist
+
+      this.save()
+    }
   }
 
   moveDown(artist, ev){
+    const listItem = ev.target.closest('.music')
 
+    const index = this.artists[artist.genre].findIndex((currentArtist, i) => {
+      return currentArtist.id === artist.id
+    })
+
+    const genreArtists = this.artists[artist.genre]
+
+    if (index < genreArtists.length - 1) {
+      this.lists[artist.genre].insertBefore(listItem.nextElementSibling, listItem)
+
+      const nextArtist = genreArtists[index + 1]
+      genreArtists[index + 1] = artist
+      genreArtists[index] = nextArtist
+
+      this.save()
+    }
   }
 
   showSongs(artist, ev){
@@ -141,5 +254,7 @@ const app = new App({
   popSelector: '.pop',
   countrySelector: '.country',
   hipHopSelector: '.hip-hop',
+  allSelector: '.all',
+  sortSelector: '.sort',
   templateSelector: '.template'
 })

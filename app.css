@@ -8,6 +8,7 @@
 
 .music {
   border: 0.5px solid black;
+  background-color: white;  
   border-radius: 2px;
   align-items: center;
   transition: 0.5s;
@@ -27,12 +28,19 @@ h1{
 html, body{
   height: 100%;
   margin: 0;
+  background: white;
 }
 
 .button{
   padding: 0.5em 0.9em;
+  margin: 0;
+  min-height: 2.5rem;
 }
 
 .music.fav{
   background: linear-gradient(to left, lightgoldenrodyellow, gold);
+}
+
+.invisible{
+  display: none;
 }
